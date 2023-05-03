@@ -8,7 +8,7 @@ namespace QuizAPI.Models
         [Key]
         public int QnId { get; set; }
 
-        [Column(TypeName="nvarchar(50)")]
+        [Column(TypeName="nvarchar(250)")]
         public string QnInWords { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
