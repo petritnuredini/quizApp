@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import Center from './Center';
 import useForm from '../hooks/useForm';
+import { ENDPOINTS, createAPIEndpoint } from '../api';
 
 const getFreshModel = () => ({
   name: '',
@@ -21,7 +22,13 @@ export default function Login() {
 
   const login = (e) => {
     e.preventDefault();
+
+    console.log('Clicked?');
     if (validate()) {
+      createAPIEndpoint(ENDPOINTS.participant)
+        .post(values)
+        .then((res) => console.log('RES>>', res))
+        .catch((err) => console.log('Err>', err));
     }
   };
 
