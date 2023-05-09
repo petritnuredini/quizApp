@@ -3,14 +3,17 @@ import useStateContext from '../hooks/useStateContext';
 import { createAPIEndpoint } from '../api';
 import { ENDPOINTS } from '../api';
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
+  LinearProgress,
   List,
   ListItem,
   ListItemButton,
   Typography,
 } from '@mui/material';
+import { getFormatedTime } from '../helper';
 
 function Quiz() {
   const [qns, setQns] = useState([]);
@@ -39,11 +42,24 @@ function Quiz() {
 
   console.log('questions,', qns);
   return qns.length != 0 ? (
-    <Card sx={{ maxWidth: 640, mx: 'auto', mt: 5 }}>
+    <Card
+      sx={{
+        maxWidth: 640,
+        mx: 'auto',
+        mt: 5,
+        '& .MuiCardHeader-action': { m: 0, alignSelf: 'center' },
+      }}
+    >
       <CardHeader
         title={'Question ' + (qnIndex + 1) + ' of 5'}
-        action={<Typography>{timeTaken}</Typography>}
+        action={<Typography>{getFormatedTime(timeTaken)}</Typography>}
       />
+      <Box>
+        <LinearProgress
+          variant='determinate'
+          value={((qnIndex + 1) * 100) / 5}
+        />
+      </Box>
       <CardContent>
         <Typography variant='h6'>{qns[qnIndex].qnInWords}</Typography>
         <List>
