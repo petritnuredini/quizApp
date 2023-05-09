@@ -19,6 +19,7 @@ function Quiz() {
   const [qns, setQns] = useState([]);
   const [qnIndex, setQnIndex] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
+  const { context, setContext } = useStateContext();
   let timer;
 
   const startTimer = () => {
@@ -40,7 +41,21 @@ function Quiz() {
     };
   }, []);
 
-  console.log('questions,', qns);
+  const updateAnswer = (qnId, optionIdx) => {
+    const temp = [...context.selectedOptions];
+    temp.push({
+      qnId,
+      selected: optionIdx,
+    });
+
+    if (qnIndex < 4) {
+      setContext({ selectedOptions: [...temp] });
+      setQnIndex(qnIndex + 1);
+    } else {
+      setContext({ selectedOptions: [...temp], timeTaken });
+    }
+  };
+
   return qns.length != 0 ? (
     <Card
       sx={{
@@ -64,7 +79,11 @@ function Quiz() {
         <Typography variant='h6'>{qns[qnIndex].qnInWords}</Typography>
         <List>
           {qns[qnIndex].options.map((item, index) => (
-            <ListItemButton disableRipple key={index}>
+            <ListItemButton
+              disableRipple
+              key={index}
+              onClick={() => updateAnswer(qns[qnIndex].qnId, index)}
+            >
               <div>
                 <b>{String.fromCharCode(65 + index) + ' . '}</b> {item}
               </div>
