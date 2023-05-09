@@ -24,7 +24,7 @@ export function ContextProvider({ children }) {
   const [context, setContext] = useState(getFreshContent());
 
   return (
-    <stateContext.Provider value={(context, setContext)}>
+    <stateContext.Provider value={{ context, setContext }}>
       {children}
     </stateContext.Provider>
   );
