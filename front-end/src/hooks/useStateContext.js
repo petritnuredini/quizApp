@@ -10,6 +10,16 @@ const getFreshContent = () => {
   };
 };
 
+export default function useStateContext() {
+  const { context, setContext } = useContext(stateContext);
+  return {
+    context,
+    setContext: (obj) => {
+      setContext({ ...context, ...obj });
+    },
+  };
+}
+
 export function ContextProvider({ children }) {
   const [context, setContext] = useState(getFreshContent());
 
