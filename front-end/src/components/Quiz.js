@@ -23,8 +23,6 @@ function Quiz() {
   const { context, setContext } = useStateContext();
   let timer;
 
-  console.log('qns', qns);
-
   const startTimer = () => {
     timer = setInterval(() => {
       setTimeTaken((prev) => prev + 1);
