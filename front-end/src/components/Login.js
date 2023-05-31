@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Center from './Center';
 import useForm from '../hooks/useForm';
 import { ENDPOINTS, createAPIEndpoint } from '../api';
@@ -20,10 +20,14 @@ const getFreshModel = () => ({
 
 export default function Login() {
   const navigate = useNavigate();
-  const { context, setContext } = useStateContext();
+  const { context, setContext, resetContext } = useStateContext();
 
   const { values, setValues, errors, setErrors, handleInputChange } =
     useForm(getFreshModel);
+
+  useEffect(() => {
+    resetContext();
+  }, []);
 
   const login = (e) => {
     e.preventDefault();

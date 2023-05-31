@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export const stateContext = createContext();
 
-const getFreshContent = () => {
+const getFreshContentext = () => {
   if (localStorage.getItem('context') === null)
     localStorage.setItem(
       'context',
@@ -23,11 +23,15 @@ export default function useStateContext() {
     setContext: (obj) => {
       setContext({ ...context, ...obj });
     },
+    resetContext: () => {
+      localStorage.removeItem('context');
+      setContext(getFreshContentext);
+    },
   };
 }
 
 export function ContextProvider({ children }) {
-  const [context, setContext] = useState(getFreshContent());
+  const [context, setContext] = useState(getFreshContentext());
 
   useEffect(() => {
     localStorage.setItem('context', JSON.stringify(context));

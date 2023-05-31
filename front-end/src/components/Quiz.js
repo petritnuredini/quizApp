@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useStateContext from '../hooks/useStateContext';
-import { createAPIEndpoint } from '../api';
+import { BASE_URL, createAPIEndpoint } from '../api';
 import { ENDPOINTS } from '../api';
 import {
   Box,
   Card,
   CardContent,
   CardHeader,
+  CardMedia,
   LinearProgress,
   List,
   ListItem,
@@ -22,6 +23,8 @@ function Quiz() {
   const { context, setContext } = useStateContext();
   let timer;
 
+  console.log('qns', qns);
+
   const startTimer = () => {
     timer = setInterval(() => {
       setTimeTaken((prev) => prev + 1);
@@ -29,6 +32,10 @@ function Quiz() {
   };
 
   useEffect(() => {
+    setContext({
+      timeTaken: 0,
+      selectedOptions: [],
+    });
     createAPIEndpoint(ENDPOINTS.question)
       .fetch()
       .then((res) => {
@@ -75,6 +82,13 @@ function Quiz() {
           value={((qnIndex + 1) * 100) / 5}
         />
       </Box>
+      {qns[qnIndex].imageName !== null ? (
+        <CardMedia
+          component={'img'}
+          image={BASE_URL + 'images/' + qns[qnIndex].imageName}
+          sx={{ width: 'auto', m: '10px auto' }}
+        />
+      ) : null}
       <CardContent>
         <Typography variant='h6'>{qns[qnIndex].qnInWords}</Typography>
         <List>
