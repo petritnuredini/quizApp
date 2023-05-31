@@ -15,8 +15,10 @@ import {
   Typography,
 } from '@mui/material';
 import { getFormatedTime } from '../helper';
+import { useNavigate } from 'react-router-dom';
 
 function Quiz() {
+  const navigate = useNavigate();
   const [qns, setQns] = useState([]);
   const [qnIndex, setQnIndex] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
@@ -58,6 +60,7 @@ function Quiz() {
       setQnIndex(qnIndex + 1);
     } else {
       setContext({ selectedOptions: [...temp], timeTaken });
+      navigate('/result');
     }
   };
 
