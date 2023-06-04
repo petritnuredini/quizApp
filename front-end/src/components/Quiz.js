@@ -40,8 +40,8 @@ function Quiz() {
       .fetch()
       .then((res) => {
         setQns(res.data);
-        startTimer();
       });
+    startTimer();
 
     return () => {
       clearInterval(timer);
