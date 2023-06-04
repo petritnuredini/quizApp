@@ -32,7 +32,6 @@ export default function Login() {
   const login = (e) => {
     e.preventDefault();
 
-    console.log('Clicked?');
     if (validate()) {
       createAPIEndpoint(ENDPOINTS.participant)
         .post(values)
@@ -40,7 +39,7 @@ export default function Login() {
           setContext({ participantId: res.data.participantId });
           navigate('/quiz');
         })
-        .catch((err) => console.log('Err>', err));
+        .catch((err) => {});
     }
   };
 

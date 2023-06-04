@@ -23,7 +23,6 @@ function Result() {
   const [qnAnswers, setQnAnswers] = useState([]);
   const navigate = useNavigate();
 
-  console.log('context', context);
   useEffect(() => {
     const ids = context.selectedOptions.map((x) => x.qnId);
 
@@ -38,7 +37,7 @@ function Result() {
         setQnAnswers(qna);
         calculateScore(qna);
       })
-      .catch((err) => console.log('ERR here', err));
+      .catch((err) => {});
   }, []);
 
   const calculateScore = (qna) => {
@@ -70,7 +69,7 @@ function Result() {
           setShowAlert(false);
         }, 4000);
       })
-      .catch((err) => console.log('ERRRR', err));
+      .catch((err) => {});
   };
 
   return (
