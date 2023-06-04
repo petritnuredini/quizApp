@@ -14,6 +14,7 @@ import {
 import { getFormatedTime } from '../helper';
 import { useNavigate } from 'react-router-dom';
 import { green } from '@mui/material/colors';
+import Answer from './Answer';
 
 function Result() {
   const { context, setContext } = useStateContext();
@@ -73,54 +74,63 @@ function Result() {
   };
 
   return (
-    <Card
-      sx={{ mt: 5, display: 'flex', width: '100%', maxWidth: 640, mx: 'auto' }}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <CardContent sx={{ flex: '1 0 auto', textAlign: 'center' }}>
-          <Typography variant='h4'>Congratulations!</Typography>
-          <Typography variant='h6'>Your Score</Typography>
-          <Typography variant='h5' sx={{ fontWeight: 600 }}>
-            <Typography variant='span' color={green[500]}>
-              {score}
+    <>
+      <Card
+        sx={{
+          mt: 5,
+          display: 'flex',
+          width: '100%',
+          maxWidth: 640,
+          mx: 'auto',
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+          <CardContent sx={{ flex: '1 0 auto', textAlign: 'center' }}>
+            <Typography variant='h4'>Congratulations!</Typography>
+            <Typography variant='h6'>Your Score</Typography>
+            <Typography variant='h5' sx={{ fontWeight: 600 }}>
+              <Typography variant='span' color={green[500]}>
+                {score}
+              </Typography>
+              /5
             </Typography>
-            /5
-          </Typography>
 
-          <Typography variant='h6'>
-            Took {getFormatedTime(context.timeTaken) + ' mins'}
-          </Typography>
-          <Button
-            variant='contained'
-            sx={{ mx: 1 }}
-            size='small'
-            onClick={submitScore}
-          >
-            Submit
-          </Button>
-          <Button
-            variant='contained'
-            sx={{ mx: 1 }}
-            size='small'
-            onClick={restart}
-          >
-            Try Again
-          </Button>
-          <Alert
-            severity='success'
-            variant='string'
-            sx={{
-              width: '60%',
-              m: 'auto',
-              visibility: showAlert ? 'visible' : 'hidden',
-            }}
-          >
-            Score updated.
-          </Alert>
-        </CardContent>
-      </Box>
-      <CardMedia component={'img'} sx={{ width: 220 }} image='./result.png' />
-    </Card>
+            <Typography variant='h6'>
+              Took {getFormatedTime(context.timeTaken) + ' mins'}
+            </Typography>
+            <Button
+              variant='contained'
+              sx={{ mx: 1 }}
+              size='small'
+              onClick={submitScore}
+            >
+              Submit
+            </Button>
+            <Button
+              variant='contained'
+              sx={{ mx: 1 }}
+              size='small'
+              onClick={restart}
+            >
+              Try Again
+            </Button>
+            <Alert
+              severity='success'
+              variant='string'
+              sx={{
+                width: '60%',
+                m: 'auto',
+                visibility: showAlert ? 'visible' : 'hidden',
+              }}
+            >
+              Score updated.
+            </Alert>
+          </CardContent>
+        </Box>
+        <CardMedia component={'img'} sx={{ width: 220 }} image='./result.png' />
+      </Card>
+      <Answer qnAnswers={qnAnswers} />
+    </>
   );
 }
 
