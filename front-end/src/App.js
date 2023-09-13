@@ -5,6 +5,8 @@ import Result from './components/Result';
 import Layout from './components/Layout';
 import { Container } from '@mui/material';
 import Authenticate from './components/Authenticate';
+import Teams from './components/Teams';
+import TeamPlayers from './components/TeamPlayers';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route path='/quiz' element={<Quiz />} />
             <Route path='/result' element={<Result />} />
+            <Route path='/teams' element={<Teams />} />
+            <Route path='/team/:id/players' element={<TeamPlayers />} />
           </Route>
         </Route>
       </Routes>

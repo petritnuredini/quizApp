@@ -1,0 +1,31 @@
+.crud_details {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.crud_details .crud_name {
+  width: 150px;
+}
+
+.crud_details .edit_crud {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crud_details .edit_crud svg {
+  width: 20px;
+  height: 20px;
+}
+
+.add_crud {
+  display: flex;
+  gap: 10px;
+  width: 150px;
+  align-items: flex-end;
+}
+
+.add_crud button {
+  height: 20px;
+}
