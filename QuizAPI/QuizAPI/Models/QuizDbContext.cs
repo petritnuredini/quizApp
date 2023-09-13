@@ -11,5 +11,8 @@ namespace QuizAPI.Models
 
         public DbSet<Participant> Participants { get; set; }
 
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+
     }
 }
