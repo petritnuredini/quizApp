@@ -117,7 +117,7 @@ namespace QuizAPI.Controllers
         }
 
         [HttpGet("{teamId}/Players")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetTeamPlayers(int teamId)
+        public async Task<ActionResult<IEnumerable<EditPlayersDto>>> GetTeamPlayers(int teamId)
         {
             var team = await _context.Teams
                 .Include(t => t.Players)
@@ -128,8 +128,9 @@ namespace QuizAPI.Controllers
                 return NotFound("The specified team does not exist.");
             }
 
-            var players = team.Players.Select(p => new PlayerDto
+            var players = team.Players.Select(p => new EditPlayersDto
             {
+                PlayerId = p.PlayerId,
                 PlayerName = p.PlayerName,
                 PlayerSurname = p.PlayerSurname,
                 TeamId = p.TeamId

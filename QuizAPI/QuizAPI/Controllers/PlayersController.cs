@@ -68,6 +68,7 @@ namespace QuizAPI.Controllers
 
             existingPlayer.PlayerName = playerDto.PlayerName;
             existingPlayer.PlayerSurname = playerDto.PlayerSurname;
+            existingPlayer.PlayerId = playerDto.PlayerId;
             existingPlayer.TeamId = playerDto.TeamId;
 
        

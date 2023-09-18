@@ -29,3 +29,28 @@
 .add_crud button {
   height: 20px;
 }
+
+.crud_inputs_wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.crud_button {
+  all: unset;
+  max-height: 50px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #90caf9;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.crud_button:hover {
+  webkit-text-decoration: none;
+  text-decoration: none;
+  background-color: rgba(144, 202, 249, 0.08);
+}

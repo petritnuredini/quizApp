@@ -1,7 +1,7 @@
-import { Button } from '@mui/material';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { DeleteIcon, EditIcon } from '../svg';
+import { button } from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DeleteIcon, EditIcon } from "../svg";
 
 const TeamItem = ({ team, onDelete, onUpdate }) => {
   const [editMode, setEditMode] = useState(false);
@@ -14,40 +14,44 @@ const TeamItem = ({ team, onDelete, onUpdate }) => {
   };
 
   return (
-    <div className='crud_details' key={team.teamName}>
+    <div className="crud_details" key={team.teamName}>
       {editMode ? (
         <input
           value={editInput}
           onChange={(e) => setEditInput(e.target.value)}
         />
       ) : (
-        <p className='crud_name'>{team.teamName}</p>
+        <p className="crud_name">{team.teamName}</p>
       )}
-      <div className='edit_crud'>
+      <div className="edit_crud">
         {editMode ? (
-          <Button onClick={handleUpdate}>Save</Button>
+          <button onClick={handleUpdate} className="crud_button">
+            Save
+          </button>
         ) : (
-          <Button
+          <button
             onClick={() => {
               setEditInput(team.teamName);
               setEditMode(true);
             }}
+            className="crud_button"
           >
             <EditIcon />
-          </Button>
+          </button>
         )}
 
-        <Button onClick={() => onDelete(team.teamId)}>
+        <button onClick={() => onDelete(team.teamId)} className="crud_button">
           <DeleteIcon />
-        </Button>
+        </button>
 
-        <Button
+        <button
           onClick={() => {
-            navigate('/team/' + team.teamId + '/players');
+            navigate("/team/" + team.teamId + "/players");
           }}
+          className="crud_button"
         >
           See Players of this team
-        </Button>
+        </button>
       </div>
     </div>
   );

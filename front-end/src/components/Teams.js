@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { ENDPOINTS, createAPIEndpoint } from '../api';
-import '../style/team-style.css';
-import { DeleteIcon, EditIcon } from '../svg';
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import TeamItem from './TeamItem';
+import React, { useEffect, useState } from "react";
+import { ENDPOINTS, createAPIEndpoint } from "../api";
+import "../style/team-style.css";
+import { DeleteIcon, EditIcon } from "../svg";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import TeamItem from "./TeamItem";
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [addATeamMode, setAddATeamMode] = useState(false);
-  const [teamToAdd, setTeamToAdd] = useState('');
+  const [teamToAdd, setTeamToAdd] = useState("");
 
   useEffect(() => {
     getTeams();
@@ -24,18 +24,19 @@ const Teams = () => {
       .catch((err) => {});
   };
 
-  const addTeam = () => {
+  const addTeam = (e) => {
+    e.preventDefault();
     createAPIEndpoint(ENDPOINTS.teams)
       .post({ teamName: teamToAdd })
       .then((res) => {
         if (res.status === 200) {
-          setTeamToAdd('');
+          setTeamToAdd("");
           getTeams();
           setAddATeamMode(false);
         }
       })
       .catch((err) => {
-        console.log('error adding', err);
+        console.log("error adding", err);
       });
   };
 
@@ -45,7 +46,7 @@ const Teams = () => {
       .then((res) => {
         getTeams();
       })
-      .catch((error) => console.log('Error', error))
+      .catch((error) => console.log("Error", error))
       .finally(() => {
         setAddATeamMode(false);
       });
@@ -58,23 +59,25 @@ const Teams = () => {
         getTeams();
       })
       .catch((err) => {
-        console.log('ERRORRR', err);
+        console.log("ERRORRR", err);
       });
   };
 
   return (
-    <div className='teams_screen_container'>
-      <h1 className='teams_title'>Teams</h1>
+    <div className="teams_screen_container">
+      <h1 className="teams_title">Teams</h1>
       {addATeamMode ? (
-        <div className='add_crud'>
+        <form className="add_crud" onSubmit={addTeam}>
           <input
             value={teamToAdd}
             onChange={(e) => setTeamToAdd(e.target.value)}
-          />{' '}
-          <Button onClick={addTeam}>Add</Button>
-        </div>
+          />
+          <button className="crud_button">Add</button>
+        </form>
       ) : (
-        <Button onClick={() => setAddATeamMode(true)}>Add a Team</Button>
+        <button onClick={() => setAddATeamMode(true)} className="crud_button">
+          Add a Team
+        </button>
       )}
       {teams !== undefined && teams.length > 0 ? (
         teams.map((team) => (
