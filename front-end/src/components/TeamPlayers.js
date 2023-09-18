@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ENDPOINTS, createAPIEndpoint } from "../api";
-import PlayerItem from "./PlayerItem";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ENDPOINTS, createAPIEndpoint } from '../api';
+import PlayerItem from './PlayerItem';
 
 const TeamPlayers = () => {
   const { id } = useParams();
-  const [teamName, setTeamName] = useState("");
+  const [teamName, setTeamName] = useState('');
   const [players, setPlayers] = useState();
   const [addPlayerMode, setAddPlayerMode] = useState();
-  const [playerName, setPlayerName] = useState("");
-  const [playerSurname, setPlayerSurname] = useState("");
-  const [error, setError] = useState("");
+  const [playerName, setPlayerName] = useState('');
+  const [playerSurname, setPlayerSurname] = useState('');
+  const [error, setError] = useState('');
 
   const getTeamAndPlayers = () => {
-    createAPIEndpoint("teams/" + id)
+    createAPIEndpoint('teams/' + id)
       .fetch()
       .then((res) => {
         setTeamName(res.data.teamName);
@@ -21,22 +21,22 @@ const TeamPlayers = () => {
       .catch((err) => {
         console.log(err);
         if (err.response?.status === 404) {
-          setError("No team with this id");
+          setError('No team with this id');
         } else {
           setError(err);
         }
       });
 
-    createAPIEndpoint("teams/" + id + "/players")
+    createAPIEndpoint('teams/' + id + '/players')
       .fetch()
       .then((res) => {
         setPlayers(res.data);
-        console.log("123", res);
+        console.log('123', res);
       })
       .catch((err) => {
         console.log(err);
         if (err.response?.status === 404) {
-          setError("No team with this id");
+          setError('No team with this id');
         } else {
           setError(err);
         }
@@ -66,7 +66,7 @@ const TeamPlayers = () => {
       });
   };
 
-  const editPlayer = (playerId, playerName, playerSurname) => {
+  const editPlayer = (playerId, playerName, playerSurname, id) => {
     createAPIEndpoint(ENDPOINTS.players)
       .put(playerId, {
         playerId: playerId,
@@ -76,9 +76,9 @@ const TeamPlayers = () => {
       })
       .then((res) => {
         getTeamAndPlayers();
-        console.log("Edit Player Response", res);
+        console.log('Edit Player Response', res);
       })
-      .catch((error) => console.log("Error", error))
+      .catch((error) => console.log('Error at team players', error))
       .finally(() => {
         setAddPlayerMode(false);
       });
@@ -89,39 +89,39 @@ const TeamPlayers = () => {
       .delete(playerId)
       .then((res) => {
         getTeamAndPlayers();
-        console.log("Delete player response", res);
+        console.log('Delete player response', res);
       })
-      .catch((error) => console.log("Error", error))
+      .catch((error) => console.log('Error', error))
       .finally(() => {
         setAddPlayerMode(false);
       });
   };
 
   return (
-    <div className="team_players_screen">
+    <div className='team_players_screen'>
       {error.length > 0 ? <h1>{error}</h1> : <h1>Players of {teamName}</h1>}
       {addPlayerMode ? (
-        <form className="add_crud" onSubmit={addPlayer}>
-          <div className="input_wrapper">
-            <label htmlFor="playername">Player name</label>
+        <form className='add_crud' onSubmit={addPlayer}>
+          <div className='input_wrapper'>
+            <label htmlFor='playername'>Player name</label>
             <input
-              id="playername"
+              id='playername'
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
             />
           </div>
-          <div className="input_wrapper">
-            <label htmlFor="playersurname">Player Surname</label>
+          <div className='input_wrapper'>
+            <label htmlFor='playersurname'>Player Surname</label>
             <input
-              id="playersurname"
+              id='playersurname'
               value={playerSurname}
               onChange={(e) => setPlayerSurname(e.target.value)}
             />
           </div>
-          <button className="crud_button">Add</button>
+          <button className='crud_button'>Add</button>
         </form>
       ) : (
-        <button onClick={() => setAddPlayerMode(true)} className="crud_button">
+        <button onClick={() => setAddPlayerMode(true)} className='crud_button'>
           Add a Player
         </button>
       )}

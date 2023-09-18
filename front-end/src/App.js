@@ -7,6 +7,7 @@ import { Container } from '@mui/material';
 import Authenticate from './components/Authenticate';
 import Teams from './components/Teams';
 import TeamPlayers from './components/TeamPlayers';
+import AllPlayers from './components/AllPlayers';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/result' element={<Result />} />
             <Route path='/teams' element={<Teams />} />
             <Route path='/team/:id/players' element={<TeamPlayers />} />
+            <Route path='/players' element={<AllPlayers />} />
           </Route>
         </Route>
       </Routes>

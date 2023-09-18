@@ -19,6 +19,7 @@ function Layout() {
             QuizApp
           </Typography>
 
+          <Button onClick={() => navigate('/players')}>Players</Button>
           <Button onClick={() => navigate('/teams')}>Teams</Button>
           <Button onClick={logout}>Logout</Button>
         </Toolbar>
