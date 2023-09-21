@@ -71,6 +71,7 @@ const Teams = () => {
           <input
             value={teamToAdd}
             onChange={(e) => setTeamToAdd(e.target.value)}
+            placeholder="Add a team name"
           />
           <button className="crud_button">Add</button>
         </form>

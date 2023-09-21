@@ -5,6 +5,8 @@ import PlayerItem from './PlayerItem';
 
 const TeamPlayers = () => {
   const { id } = useParams();
+  const [teams, setTeams] = useState();
+
   const [teamName, setTeamName] = useState('');
   const [players, setPlayers] = useState();
   const [addPlayerMode, setAddPlayerMode] = useState();
@@ -12,7 +14,17 @@ const TeamPlayers = () => {
   const [playerSurname, setPlayerSurname] = useState('');
   const [error, setError] = useState('');
 
+
+
   const getTeamAndPlayers = () => {
+    createAPIEndpoint(ENDPOINTS.teams)
+    .fetch()
+    .then((res) => {
+      setTeams(res.data);
+    })
+    .catch((err) => {});
+
+
     createAPIEndpoint('teams/' + id)
       .fetch()
       .then((res) => {
@@ -132,6 +144,7 @@ const TeamPlayers = () => {
               player={player}
               onDelete={deletePlayer}
               onUpdate={editPlayer}
+              teams={teams}
             />
           ))
         : null}

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { DeleteIcon, EditIcon } from '../svg';
-import { ENDPOINTS, createAPIEndpoint } from '../api';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DeleteIcon, EditIcon } from "../svg";
+import { ENDPOINTS, createAPIEndpoint } from "../api";
 
-const PlayerItem = ({ player, onDelete, onUpdate, team }) => {
+const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
   const [editMode, setEditMode] = useState(false);
   const [inputOnevalue, setInputOnevalue] = useState(player.playerName);
   const [inputSecondValue, setInputSecondValue] = useState(
     player.playerSurname
   );
-  const [teams, setTeams] = useState();
-  const [selectValue, setSelectValue] = useState();
+  const [selectValue, setSelectValue] = useState(
+    player && player.team && player.team.teamId
+  );
 
   const handleUpdate = () => {
     onUpdate(
@@ -22,64 +23,54 @@ const PlayerItem = ({ player, onDelete, onUpdate, team }) => {
     setEditMode(false);
   };
 
-  const getTeams = () => {
-    createAPIEndpoint(ENDPOINTS.teams)
-      .fetch()
-      .then((res) => {
-        console.log('RES getting teams>>', res);
-        setTeams(res.data);
-      })
-      .catch((err) => {});
-  };
-
   const onOptionChangeHandler = (e) => {
     setSelectValue(parseInt(e.target.value));
   };
 
-  useEffect(() => {
-    if (team !== undefined) {
-      getTeams();
-    }
-  }, [team]);
-
-  console.log('teamm', selectValue);
-
   return (
-    <div className='crud_details' key={player.playerName}>
+    <div className="crud_details" key={player.playerName}>
       {editMode ? (
-        <div className='crud_details'>
+        <div className="crud_details">
           <input
             value={inputOnevalue}
             onChange={(e) => setInputOnevalue(e.target.value)}
+            placeholder="Add a player name"
           />
           <input
             value={inputSecondValue}
             onChange={(e) => setInputSecondValue(e.target.value)}
+            placeholder="Add a player surname"
           />
           {team !== undefined ? (
-            <select onChange={onOptionChangeHandler}>
-              {teams
-                .filter((team) => team.teamName !== 'Select a team')
-                .map((team, index) => (
-                  <option key={index} value={team.teamId}>
-                    {team.teamName}
-                  </option>
-                ))}
+            <select
+              onChange={onOptionChangeHandler}
+              value={player.team.teamName}
+            >
+              <option value={player.team.teamId}>{player.team.teamName}</option>
+              {teams !== undefined &&
+                teams.length > 0 &&
+                teams
+                  .filter((team) => team.teamName !== player.team.teamName)
+                  .map((team, index) => (
+                    <option key={index} value={team.teamId}>
+                      {team.teamName}
+                    </option>
+                  ))}
             </select>
           ) : null}
         </div>
       ) : (
-        <div className='crud_inputs_wrapper'>
-          <p className='crud_name'>{player.playerName}</p>
-          <p className='crud_name'>{player.playerSurname}</p>
+        <div className="crud_inputs_wrapper">
+          <p className="crud_name">{player.playerName}</p>
+          <p className="crud_name">{player.playerSurname}</p>
           {team !== undefined ? (
-            <p className='crud_name'>{team.teamName}</p>
+            <p className="crud_name">{team.teamName}</p>
           ) : null}
         </div>
       )}
-      <div className='edit_crud'>
+      <div className="edit_crud">
         {editMode ? (
-          <button onClick={handleUpdate} className='crud_button'>
+          <button onClick={handleUpdate} className="crud_button">
             Save
           </button>
         ) : (
@@ -88,7 +79,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team }) => {
               setInputOnevalue(player.playerName);
               setEditMode(true);
             }}
-            className='crud_button'
+            className="crud_button"
           >
             <EditIcon />
           </button>
@@ -96,7 +87,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team }) => {
 
         <button
           onClick={() => onDelete(player.playerId)}
-          className='crud_button'
+          className="crud_button"
         >
           <DeleteIcon />
         </button>

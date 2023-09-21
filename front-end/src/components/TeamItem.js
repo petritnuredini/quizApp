@@ -8,7 +8,8 @@ const TeamItem = ({ team, onDelete, onUpdate }) => {
   const [editInput, setEditInput] = useState(team.teamName);
   const navigate = useNavigate();
 
-  const handleUpdate = () => {
+  const handleUpdate = (e) => {
+    e.preventDefault();
     onUpdate(team.teamId, editInput);
     setEditMode(false);
   };
@@ -16,10 +17,13 @@ const TeamItem = ({ team, onDelete, onUpdate }) => {
   return (
     <div className="crud_details" key={team.teamName}>
       {editMode ? (
-        <input
-          value={editInput}
-          onChange={(e) => setEditInput(e.target.value)}
-        />
+        <form onSubmit={handleUpdate}>
+          <input
+            value={editInput}
+            onChange={(e) => setEditInput(e.target.value)}
+            placeholder="Add a team name"
+          />
+        </form>
       ) : (
         <p className="crud_name">{team.teamName}</p>
       )}
