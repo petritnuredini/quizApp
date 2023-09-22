@@ -34,12 +34,12 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
           <input
             value={inputOnevalue}
             onChange={(e) => setInputOnevalue(e.target.value)}
-            placeholder="Add a player name"
+            placeholder="Add a Client name"
           />
           <input
             value={inputSecondValue}
             onChange={(e) => setInputSecondValue(e.target.value)}
-            placeholder="Add a player surname"
+            placeholder="Add a Client surname"
           />
           {team !== undefined ? (
             <select

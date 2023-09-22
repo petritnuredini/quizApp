@@ -50,11 +50,11 @@ const TeamItem = ({ team, onDelete, onUpdate }) => {
 
         <button
           onClick={() => {
-            navigate("/team/" + team.teamId + "/players");
+            navigate("/bank/" + team.teamId + "/clients");
           }}
           className="crud_button"
         >
-          See Players of this team
+          See Clients of this Bank
         </button>
       </div>
     </div>

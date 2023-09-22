@@ -62,7 +62,7 @@ const AllPlayers = () => {
         getPlayers();
         console.log("Edit Player Response", res);
       })
-      .catch((error) => console.log("Error at all players", error))
+      .catch((error) => console.log("Error at All Clients", error))
       .finally(() => {
         setAddPlayerMode(false);
       });
@@ -95,18 +95,18 @@ const AllPlayers = () => {
 
   return (
     <div className="player_screen_container">
-      <h1 className="players_screen_title">All Players</h1>
+      <h1 className="players_screen_title">All Clients</h1>
       {addPlayerMode ? (
         <form className="add_crud" onSubmit={addPlayer}>
           <input
             value={playerNameToAdd}
             onChange={(e) => setPlayerNameToAdd(e.target.value)}
-            placeholder="Add a player name"
+            placeholder="Add a Client name"
           />
           <input
             value={playerSurnameNameToAdd}
             onChange={(e) => setPlayerSurnameNameToAdd(e.target.value)}
-            placeholder="Add a player surname"
+            placeholder="Add a Client surname"
           />
           {teams !== undefined && teams.length > 0 ? (
             <select onChange={onOptionChangeHandler}>
@@ -121,7 +121,7 @@ const AllPlayers = () => {
         </form>
       ) : (
         <button onClick={() => setAddPlayerMode(true)} className="crud_button">
-          Add a Player
+          Add a Client
         </button>
       )}
       {players !== undefined && players.length > 0

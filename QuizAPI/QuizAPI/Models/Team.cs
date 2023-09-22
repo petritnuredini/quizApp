@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace QuizAPI.Models
 {
+    [Table("Bank")]
     public class Team
     {
         [Key]
