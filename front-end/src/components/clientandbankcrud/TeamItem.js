@@ -1,7 +1,6 @@
-import { button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeleteIcon, EditIcon } from "../svg";
+import { DeleteIcon, EditIcon } from "../../svg";
 
 const TeamItem = ({ team, onDelete, onUpdate }) => {
   const [editMode, setEditMode] = useState(false);

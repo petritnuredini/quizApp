@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ENDPOINTS, createAPIEndpoint } from "../api";
-import "../style/team-style.css";
-import { DeleteIcon, EditIcon } from "../svg";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { ENDPOINTS, createAPIEndpoint } from "../../api";
+import "../../style/team-style.css";
 import TeamItem from "./TeamItem";
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [addATeamMode, setAddATeamMode] = useState(false);
   const [teamToAdd, setTeamToAdd] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     getTeams();
@@ -20,36 +18,55 @@ const Teams = () => {
       .fetch()
       .then((res) => {
         setTeams(res.data);
+        setError("");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log("Error", err);
+        setError("An error accoured contacting backend!");
+      });
   };
 
   const addTeam = (e) => {
     e.preventDefault();
-    createAPIEndpoint(ENDPOINTS.teams)
-      .post({ teamName: teamToAdd })
-      .then((res) => {
-        if (res.status === 200) {
-          setTeamToAdd("");
-          getTeams();
-          setAddATeamMode(false);
-        }
-      })
-      .catch((err) => {
-        console.log("error adding", err);
-      });
+    if (teamToAdd.length > 0) {
+      createAPIEndpoint(ENDPOINTS.teams)
+        .post({ teamName: teamToAdd })
+        .then((res) => {
+          if (res.status === 200) {
+            setTeamToAdd("");
+            getTeams();
+            setAddATeamMode(false);
+            setError("");
+          }
+        })
+        .catch((err) => {
+          console.log("error adding", err);
+          setError("An error accoured contacting backend!");
+        });
+    } else {
+      setError("Please enter a valid bank name!");
+    }
   };
 
   const editTeam = (id, newName) => {
-    createAPIEndpoint(ENDPOINTS.teams)
-      .put(id, { teamName: newName })
-      .then((res) => {
-        getTeams();
-      })
-      .catch((error) => console.log("Error", error))
-      .finally(() => {
-        setAddATeamMode(false);
-      });
+    if (newName.length > 0) {
+      createAPIEndpoint(ENDPOINTS.teams)
+        .put(id, { teamName: newName })
+        .then((res) => {
+          getTeams();
+          setError("");
+        })
+        .catch((error) => {
+          setError("An error accoured contacting backend!");
+
+          console.log("Error", error);
+        })
+        .finally(() => {
+          setAddATeamMode(false);
+        });
+    } else {
+      setError("Please enter a valid bank name!");
+    }
   };
 
   const deleteTeam = (id) => {
@@ -65,7 +82,9 @@ const Teams = () => {
 
   return (
     <div className="teams_screen_container">
-      <h1 className="teams_title">Teams</h1>
+      <h1 className="teams_title">Banks</h1>
+      {error.length > 0 && <p className="error_message">{error}</p>}
+
       {addATeamMode ? (
         <form className="add_crud" onSubmit={addTeam}>
           <input
@@ -77,7 +96,7 @@ const Teams = () => {
         </form>
       ) : (
         <button onClick={() => setAddATeamMode(true)} className="crud_button">
-          Add a Team
+          Add a Bank
         </button>
       )}
       {teams !== undefined && teams.length > 0 ? (
@@ -90,7 +109,7 @@ const Teams = () => {
           />
         ))
       ) : (
-        <p>no teams</p>
+        <p className="no_data_on_system">...Opps, no banks found!</p>
       )}
     </div>
   );

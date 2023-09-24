@@ -1,13 +1,12 @@
 import Login from "./components/Login";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Quiz from "./components/Quiz";
 import Result from "./components/Result";
 import Layout from "./components/Layout";
-import { Container } from "@mui/material";
 import Authenticate from "./components/Authenticate";
-import Teams from "./components/Teams";
-import TeamPlayers from "./components/TeamPlayers";
-import AllPlayers from "./components/AllPlayers";
+import Teams from "./components/clientandbankcrud/Teams";
+import TeamPlayers from "./components/clientandbankcrud/TeamPlayers";
+import AllPlayers from "./components/clientandbankcrud/AllPlayers";
 
 function App() {
   return (
