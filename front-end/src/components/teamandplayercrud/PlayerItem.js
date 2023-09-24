@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeleteIcon, EditIcon } from "../svg";
-import { ENDPOINTS, createAPIEndpoint } from "../api";
+import { DeleteIcon, EditIcon } from "../../svg";
+import { ENDPOINTS, createAPIEndpoint } from "../../api";
 
 const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
   const [editMode, setEditMode] = useState(false);
@@ -42,11 +42,8 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
             placeholder="Add a player surname"
           />
           {team !== undefined ? (
-            <select
-              onChange={onOptionChangeHandler}
-              value={player.team.teamName}
-            >
-              <option value={player.team.teamId}>{player.team.teamName}</option>
+            <select onChange={onOptionChangeHandler}>
+              <option value={selectValue}>{player.team.teamName}</option>
               {teams !== undefined &&
                 teams.length > 0 &&
                 teams
@@ -71,7 +68,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
       <div className="edit_crud">
         {editMode ? (
           <button onClick={handleUpdate} className="crud_button">
-            Save
+            Save322
           </button>
         ) : (
           <button

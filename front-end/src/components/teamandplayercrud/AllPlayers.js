@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../style/player-style.css";
-import { ENDPOINTS, createAPIEndpoint } from "../api";
+import { ENDPOINTS, createAPIEndpoint } from "../../api";
 import PlayerItem from "./PlayerItem";
 
 const AllPlayers = () => {
@@ -10,6 +9,7 @@ const AllPlayers = () => {
   const [playerNameToAdd, setPlayerNameToAdd] = useState("");
   const [playerSurnameNameToAdd, setPlayerSurnameNameToAdd] = useState("");
   const [selectValue, setSelectValue] = useState();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     getPlayers();
@@ -23,8 +23,11 @@ const AllPlayers = () => {
         console.log("RES getting teams>>", res);
         setTeams(res.data);
         setSelectValue(res.data[0].teamId);
+        setError("");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setError("An error accoured contacting backend!");
+      });
   };
 
   const getPlayers = () => {
@@ -33,8 +36,11 @@ const AllPlayers = () => {
       .then((res) => {
         console.log("resss", res);
         setPlayers(res.data);
+        setError("");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setError("An error accoured contacting backend!");
+      });
   };
 
   const deletePlayer = (id) => {
@@ -43,50 +49,66 @@ const AllPlayers = () => {
       .then((res) => {
         console.log("RESPONSE OF DELETING PLAYER");
         getPlayers();
+        setError("");
       })
       .catch((err) => {
         console.log("ERRORRR", err);
+        setError("An error accoured contacting backend!");
       });
   };
 
   const editPlayer = (playerId, playerName, playerSurname, id) => {
-    console.log("iddd>>", id);
-    createAPIEndpoint(ENDPOINTS.players)
-      .put(playerId, {
-        playerId: playerId,
-        playerName: playerName,
-        playerSurname: playerSurname,
-        teamId: id,
-      })
-      .then((res) => {
-        getPlayers();
-        console.log("Edit Player Response", res);
-      })
-      .catch((error) => console.log("Error at all players", error))
-      .finally(() => {
-        setAddPlayerMode(false);
-      });
+    if (playerName.length > 0 && playerSurname.length > 0) {
+      createAPIEndpoint(ENDPOINTS.players)
+        .put(playerId, {
+          playerId: playerId,
+          playerName: playerName,
+          playerSurname: playerSurname,
+          teamId: id,
+        })
+        .then((res) => {
+          getPlayers();
+          console.log("Edit Player Response", res);
+          setError("");
+        })
+        .catch((error) => console.log("Error at all players", error))
+        .finally(() => {
+          setAddPlayerMode(false);
+        });
+    } else {
+      setError("Please enter a valid name and surname!");
+    }
   };
 
   const addPlayer = (e) => {
     e.preventDefault();
-    createAPIEndpoint(ENDPOINTS.players)
-      .post({
-        playerName: playerNameToAdd,
-        playerSurname: playerSurnameNameToAdd,
-        teamId: selectValue,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setPlayerNameToAdd("");
-          setPlayerSurnameNameToAdd("");
-          getPlayers();
-          setAddPlayerMode(false);
-        }
-      })
-      .catch((err) => {
-        console.log("error adding", err);
-      });
+
+    if (teams.length === 0) {
+      setError("You must add a team first, and then you can add a player!");
+    }
+    if (playerNameToAdd.length > 0 && playerSurnameNameToAdd.length > 0) {
+      createAPIEndpoint(ENDPOINTS.players)
+        .post({
+          playerName: playerNameToAdd,
+          playerSurname: playerSurnameNameToAdd,
+          teamId: selectValue,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            setPlayerNameToAdd("");
+            setPlayerSurnameNameToAdd("");
+            getPlayers();
+            setAddPlayerMode(false);
+            setError("");
+          }
+        })
+        .catch((err) => {
+          console.log("error adding", err);
+          setError("An error accoured contacting backend!");
+        });
+    } else {
+      setError("Please enter a valid name and surname!");
+    }
   };
 
   const onOptionChangeHandler = (e) => {
@@ -96,6 +118,7 @@ const AllPlayers = () => {
   return (
     <div className="player_screen_container">
       <h1 className="players_screen_title">All Players</h1>
+      {error.length > 0 && <p className="error_message">{error}</p>}
       {addPlayerMode ? (
         <form className="add_crud" onSubmit={addPlayer}>
           <input
@@ -124,18 +147,20 @@ const AllPlayers = () => {
           Add a Player
         </button>
       )}
-      {players !== undefined && players.length > 0
-        ? players.map((player) => (
-            <PlayerItem
-              key={player.playerId}
-              player={player}
-              onDelete={deletePlayer}
-              onUpdate={editPlayer}
-              team={player.team}
-              teams={teams}
-            />
-          ))
-        : null}
+      {players !== undefined && players.length > 0 ? (
+        players.map((player) => (
+          <PlayerItem
+            key={player.playerId}
+            player={player}
+            onDelete={deletePlayer}
+            onUpdate={editPlayer}
+            team={player.team}
+            teams={teams}
+          />
+        ))
+      ) : (
+        <p className="no_data_on_system">...Opps, no players found!</p>
+      )}
     </div>
   );
 };
