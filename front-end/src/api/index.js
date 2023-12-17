@@ -1,17 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const BASE_URL = 'https://localhost:7187/';
+export const BASE_URL = "https://localhost:7187/";
 
 export const ENDPOINTS = {
-  participant: 'participant',
-  question: 'question',
-  getAnswers: 'question/getanswers',
-  teams: 'teams',
-  players: 'players',
+  participant: "participant",
+  question: "question",
+  getAnswers: "question/getanswers",
+  sculptors: "sculptors",
+  sculptures: "sculptures",
 };
 
 export const createAPIEndpoint = (endpoint) => {
-  let url = BASE_URL + 'api/' + endpoint + '/';
+  let url = BASE_URL + "api/" + endpoint + "/";
   return {
     fetch: () => axios.get(url),
     fetchById: (id) => axios.get(url + id),
