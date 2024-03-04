@@ -87,12 +87,20 @@ const TeamPlayers = () => {
     }
   };
 
-  const editPlayer = (playerId, playerName, playerNumber, id) => {
+  const editPlayer = (
+    playerId,
+    playerName,
+    playerNumber,
+    playerBirthYear,
+    id
+  ) => {
+    console.log("id here", id);
     createAPIEndpoint(ENDPOINTS.players)
       .put(playerId, {
         playerId: playerId,
         playerName: playerName,
         number: playerNumber,
+        birthYear: playerBirthYear,
         teamId: id,
       })
       .then((res) => {
@@ -136,7 +144,7 @@ const TeamPlayers = () => {
             />
           </div>
           <div className="input_wrapper">
-            <label htmlFor="playerNumber">Player Birthyear</label>
+            <label htmlFor="playerNumber">Player Number</label>
             <input
               id="playerNumber"
               placeholder="Player number"

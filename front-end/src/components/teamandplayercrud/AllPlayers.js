@@ -12,7 +12,6 @@ const AllPlayers = () => {
   const [selectValue, setSelectValue] = useState();
   const [error, setError] = useState("");
 
-  console.log("playerBirthYear", playerBirthYear);
   useEffect(() => {
     getPlayers();
     getTeams();
@@ -22,7 +21,7 @@ const AllPlayers = () => {
     createAPIEndpoint(ENDPOINTS.teams)
       .fetch()
       .then((res) => {
-        console.log("RES getting teams>>", res);
+        // console.log("RES getting teams>>", res);
         setTeams(res.data);
         setSelectValue(res.data[0].teamId);
         setError("");
@@ -36,7 +35,7 @@ const AllPlayers = () => {
     createAPIEndpoint(ENDPOINTS.players)
       .fetch()
       .then((res) => {
-        console.log("resss", res);
+        // console.log("resss", res);
         setPlayers(res.data);
         setError("");
       })
@@ -49,7 +48,7 @@ const AllPlayers = () => {
     createAPIEndpoint(ENDPOINTS.players)
       .delete(id)
       .then((res) => {
-        console.log("RESPONSE OF DELETING PLAYER");
+        // console.log("RESPONSE OF DELETING PLAYER");
         getPlayers();
         setError("");
       })
@@ -60,13 +59,7 @@ const AllPlayers = () => {
   };
 
   const editPlayer = (playerId, playerName, number, birthYear, id) => {
-    if (playerName.length > 0 && number.length > 0) {
-      console.log(
-        "playerBirthYear",
-
-        playerBirthYear
-      );
-
+    if (playerName.length > 0 && number > 0) {
       createAPIEndpoint(ENDPOINTS.players)
         .put(playerId, {
           playerName: playerName,
@@ -77,7 +70,7 @@ const AllPlayers = () => {
         })
         .then((res) => {
           getPlayers();
-          console.log("Edit Player Response", res);
+          // console.log("Edit Player Response", res);
           setError("");
         })
         .catch((error) => console.log("Error at all players", error))
@@ -147,7 +140,7 @@ const AllPlayers = () => {
             onChange={(e) => setPlayerBirthYear(e.target.value)}
             placeholder="Add a player birth year"
           />
-          123
+
           {teams !== undefined && teams.length > 0 ? (
             <select onChange={onOptionChangeHandler}>
               {teams.map((team, index) => (

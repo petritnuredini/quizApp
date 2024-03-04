@@ -6,7 +6,7 @@ import { ENDPOINTS, createAPIEndpoint } from "../../api";
 const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
   const [editMode, setEditMode] = useState(false);
   const [inputOnevalue, setInputOnevalue] = useState(player.playerName);
-  const [inputSecondValue, setInputSecondValue] = useState(player.name);
+  const [inputSecondValue, setInputSecondValue] = useState(player.number);
   const [inputThirdValue, setInputThirdValue] = useState(player.birthYear);
 
   const [selectValue, setSelectValue] = useState(
@@ -45,7 +45,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
           <input
             value={inputThirdValue}
             onChange={(e) => setInputThirdValue(e.target.value)}
-            placeholder="Add a player birthyear"
+            placeholder="Add a player Birthyear"
           />
 
           {team !== undefined ? (
