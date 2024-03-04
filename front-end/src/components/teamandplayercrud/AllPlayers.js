@@ -7,9 +7,12 @@ const AllPlayers = () => {
   const [teams, setTeams] = useState();
   const [addPlayerMode, setAddPlayerMode] = useState(false);
   const [playerNameToAdd, setPlayerNameToAdd] = useState("");
-  const [playerSurnameNameToAdd, setPlayerSurnameNameToAdd] = useState("");
+  const [playerNumber, setPlayerNumber] = useState();
+  const [playerBirthYear, setPlayerBirthYear] = useState("");
   const [selectValue, setSelectValue] = useState();
   const [error, setError] = useState("");
+
+  console.log("playerNumber", playerNumber);
 
   useEffect(() => {
     getPlayers();
@@ -57,14 +60,28 @@ const AllPlayers = () => {
       });
   };
 
-  const editPlayer = (playerId, playerName, playerSurname, id) => {
+  const editPlayer = (
+    playerId,
+    playerName,
+    playerNumber,
+    playerSurname,
+    playerBirthYear,
+    id
+  ) => {
     if (playerName.length > 0 && playerSurname.length > 0) {
+      console.log(
+        "playerBirthYear",
+
+        playerBirthYear
+      );
+
       createAPIEndpoint(ENDPOINTS.players)
         .put(playerId, {
-          playerId: playerId,
           playerName: playerName,
-          playerSurname: playerSurname,
-          teamId: id,
+          number: playerNumber,
+          playerId: playerId,
+          birthYear: playerBirthYear.toString(),
+          teamId: 1,
         })
         .then((res) => {
           getPlayers();
@@ -86,17 +103,19 @@ const AllPlayers = () => {
     if (teams.length === 0) {
       setError("You must add a team first, and then you can add a player!");
     }
-    if (playerNameToAdd.length > 0 && playerSurnameNameToAdd.length > 0) {
+    if (playerNameToAdd.length > 0 && playerNumber.length > 0) {
+      console.log("playerNumber", playerNumber);
       createAPIEndpoint(ENDPOINTS.players)
         .post({
           playerName: playerNameToAdd,
-          playerSurname: playerSurnameNameToAdd,
+          number: parseInt(playerNumber),
+          birthYear: playerBirthYear,
           teamId: selectValue,
         })
         .then((res) => {
           if (res.status === 200) {
             setPlayerNameToAdd("");
-            setPlayerSurnameNameToAdd("");
+            setPlayerNumber("");
             getPlayers();
             setAddPlayerMode(false);
             setError("");
@@ -127,10 +146,16 @@ const AllPlayers = () => {
             placeholder="Add a player name"
           />
           <input
-            value={playerSurnameNameToAdd}
-            onChange={(e) => setPlayerSurnameNameToAdd(e.target.value)}
-            placeholder="Add a player surname"
+            value={playerNumber}
+            onChange={(e) => setPlayerNumber(e.target.value)}
+            placeholder="Add a player number"
           />
+          <input
+            value={playerBirthYear}
+            onChange={(e) => setPlayerBirthYear(e.target.value)}
+            placeholder="Add a player birth year"
+          />
+
           {teams !== undefined && teams.length > 0 ? (
             <select onChange={onOptionChangeHandler}>
               {teams.map((team, index) => (

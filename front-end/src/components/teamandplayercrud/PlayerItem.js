@@ -6,9 +6,9 @@ import { ENDPOINTS, createAPIEndpoint } from "../../api";
 const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
   const [editMode, setEditMode] = useState(false);
   const [inputOnevalue, setInputOnevalue] = useState(player.playerName);
-  const [inputSecondValue, setInputSecondValue] = useState(
-    player.playerSurname
-  );
+  const [inputSecondValue, setInputSecondValue] = useState(player.name);
+  const [inputThirdValue, setInputThirdValue] = useState(player.birthYear);
+
   const [selectValue, setSelectValue] = useState(
     player && player.team && player.team.teamId
   );
@@ -18,6 +18,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
       player.playerId,
       inputOnevalue,
       inputSecondValue,
+      inputThirdValue,
       team !== undefined ? selectValue : player.teamId
     );
     setEditMode(false);
@@ -39,7 +40,12 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
           <input
             value={inputSecondValue}
             onChange={(e) => setInputSecondValue(e.target.value)}
-            placeholder="Add a player surname"
+            placeholder="Add a player number"
+          />
+          <input
+            value={inputThirdValue}
+            onChange={(e) => setInputThirdValue(e.target.value)}
+            placeholder="Add a player birthyear"
           />
           {team !== undefined ? (
             <select onChange={onOptionChangeHandler}>
@@ -59,7 +65,8 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
       ) : (
         <div className="crud_inputs_wrapper">
           <p className="crud_name">{player.playerName}</p>
-          <p className="crud_name">{player.playerSurname}</p>
+          <p className="crud_name">{player.number}</p>
+          <p className="crud_name">{player.birthYear}</p>
           {team !== undefined ? (
             <p className="crud_name">{team.teamName}</p>
           ) : null}

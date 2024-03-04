@@ -9,7 +9,8 @@ namespace QuizAPI.Models
         [Key]
         public int PlayerId { get; set; }
         public string PlayerName { get; set; }
-        public string PlayerSurname { get; set; }
+        public int Number { get; set; }
+        public string BirthYear { get; set; }
         [JsonIgnore]
         public int TeamId { get; set; }
         [ForeignKey("TeamId")]
@@ -18,14 +19,16 @@ namespace QuizAPI.Models
     public class PlayerDto
     {
         public string PlayerName { get; set; }
-        public string PlayerSurname { get; set; }
+        public int Number { get; set; }
+        public string BirthYear { get; set; }
         public int TeamId { get; set; }
     }
     public class EditPlayersDto
     {
         public int PlayerId { get; set; }
         public string PlayerName { get; set; }
-        public string PlayerSurname { get; set; }
+        public int Number { get; set; }
+        public string BirthYear { get; set; }
         public int TeamId { get; set; }
     }
 }

@@ -67,8 +67,9 @@ namespace QuizAPI.Controllers
             }
 
             existingPlayer.PlayerName = playerDto.PlayerName;
-            existingPlayer.PlayerSurname = playerDto.PlayerSurname;
+            existingPlayer.Number = playerDto.Number;
             existingPlayer.PlayerId = playerDto.PlayerId;
+            existingPlayer.BirthYear = playerDto.BirthYear;
             existingPlayer.TeamId = playerDto.TeamId;
 
        
@@ -93,7 +94,7 @@ namespace QuizAPI.Controllers
             // Check if a player with the same name and surname already exists
             var existingPlayer = await _context.Players.FirstOrDefaultAsync(p =>
                 p.PlayerName == playerDto.PlayerName &&
-                p.PlayerSurname == playerDto.PlayerSurname);
+                p.Number == playerDto.Number);
 
             if (existingPlayer != null)
             {
@@ -103,7 +104,8 @@ namespace QuizAPI.Controllers
             var player = new Player
             {
                 PlayerName = playerDto.PlayerName,
-                PlayerSurname = playerDto.PlayerSurname,
+                Number = playerDto.Number,
+                BirthYear = playerDto.BirthYear,
                 TeamId = playerDto.TeamId
             };
 

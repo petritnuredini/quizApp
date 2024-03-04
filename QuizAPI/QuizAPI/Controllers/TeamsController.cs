@@ -132,7 +132,8 @@ namespace QuizAPI.Controllers
             {
                 PlayerId = p.PlayerId,
                 PlayerName = p.PlayerName,
-                PlayerSurname = p.PlayerSurname,
+                Number = p.Number,
+                BirthYear = p.BirthYear,
                 TeamId = p.TeamId
             }).ToList();
 

@@ -11,7 +11,8 @@ const TeamPlayers = () => {
   const [players, setPlayers] = useState();
   const [addPlayerMode, setAddPlayerMode] = useState();
   const [playerName, setPlayerName] = useState("");
-  const [playerSurname, setPlayerSurname] = useState("");
+  const [playerNumber, setPlayerNumber] = useState("");
+  const [playerBirthYear, setPlayerBirthYear] = useState("");
   const [error, setError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -62,11 +63,12 @@ const TeamPlayers = () => {
 
   const addPlayer = (e) => {
     e.preventDefault();
-    if (playerName.length > 0 && playerSurname.length > 0) {
+    if (playerName.length > 0 && playerNumber.length > 0) {
       createAPIEndpoint(ENDPOINTS.players)
         .post({
           playerName: playerName,
-          playerSurname: playerSurname,
+          number: playerNumber,
+          birthYear: playerBirthYear,
           teamId: id,
         })
         .then((res) => {
@@ -85,12 +87,12 @@ const TeamPlayers = () => {
     }
   };
 
-  const editPlayer = (playerId, playerName, playerSurname, id) => {
+  const editPlayer = (playerId, playerName, playerNumber, id) => {
     createAPIEndpoint(ENDPOINTS.players)
       .put(playerId, {
         playerId: playerId,
         playerName: playerName,
-        playerSurname: playerSurname,
+        number: playerNumber,
         teamId: id,
       })
       .then((res) => {
@@ -134,12 +136,21 @@ const TeamPlayers = () => {
             />
           </div>
           <div className="input_wrapper">
-            <label htmlFor="playersurname">Player Surname</label>
+            <label htmlFor="playerNumber">Player Birthyear</label>
             <input
-              id="playersurname"
-              placeholder="Player Surname"
-              value={playerSurname}
-              onChange={(e) => setPlayerSurname(e.target.value)}
+              id="playerNumber"
+              placeholder="Player number"
+              value={playerNumber}
+              onChange={(e) => setPlayerNumber(e.target.value)}
+            />
+          </div>
+          <div className="input_wrapper">
+            <label htmlFor="playerBirthYear">Player Birthyear</label>
+            <input
+              id="playerBirthYear"
+              placeholder="Player Birthyear"
+              value={playerBirthYear}
+              onChange={(e) => setPlayerBirthYear(e.target.value)}
             />
           </div>
           <button className="crud_button">Add</button>
