@@ -47,6 +47,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
             onChange={(e) => setInputThirdValue(e.target.value)}
             placeholder="Add a player birthyear"
           />
+
           {team !== undefined ? (
             <select onChange={onOptionChangeHandler}>
               <option value={selectValue}>{player.team.teamName}</option>
@@ -75,7 +76,7 @@ const PlayerItem = ({ player, onDelete, onUpdate, team, teams }) => {
       <div className="edit_crud">
         {editMode ? (
           <button onClick={handleUpdate} className="crud_button">
-            Save322
+            Save
           </button>
         ) : (
           <button

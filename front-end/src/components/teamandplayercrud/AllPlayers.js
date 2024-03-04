@@ -12,8 +12,7 @@ const AllPlayers = () => {
   const [selectValue, setSelectValue] = useState();
   const [error, setError] = useState("");
 
-  console.log("playerNumber", playerNumber);
-
+  console.log("playerBirthYear", playerBirthYear);
   useEffect(() => {
     getPlayers();
     getTeams();
@@ -60,15 +59,8 @@ const AllPlayers = () => {
       });
   };
 
-  const editPlayer = (
-    playerId,
-    playerName,
-    playerNumber,
-    playerSurname,
-    playerBirthYear,
-    id
-  ) => {
-    if (playerName.length > 0 && playerSurname.length > 0) {
+  const editPlayer = (playerId, playerName, number, birthYear, id) => {
+    if (playerName.length > 0 && number.length > 0) {
       console.log(
         "playerBirthYear",
 
@@ -78,10 +70,10 @@ const AllPlayers = () => {
       createAPIEndpoint(ENDPOINTS.players)
         .put(playerId, {
           playerName: playerName,
-          number: playerNumber,
+          number: number,
           playerId: playerId,
-          birthYear: playerBirthYear.toString(),
-          teamId: 1,
+          birthYear: birthYear,
+          teamId: id,
         })
         .then((res) => {
           getPlayers();
@@ -155,7 +147,7 @@ const AllPlayers = () => {
             onChange={(e) => setPlayerBirthYear(e.target.value)}
             placeholder="Add a player birth year"
           />
-
+          123
           {teams !== undefined && teams.length > 0 ? (
             <select onChange={onOptionChangeHandler}>
               {teams.map((team, index) => (
