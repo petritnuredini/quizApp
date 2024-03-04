@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Images\" />
+    <Folder Include="DTO\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,4 +22,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DTO\" />
+    <None Remove="Migrations\" />
+  </ItemGroup>
 </Project>
